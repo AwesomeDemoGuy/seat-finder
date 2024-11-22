@@ -36,7 +36,7 @@ def check_for_seats(current_value):
         available_seats, total_seats = match.groups()
         if available_seats != "0":
             return True
-    return True
+    return False
 
 # Store the current value for future comparisons
 def store_current_value(current_value, name, file):
