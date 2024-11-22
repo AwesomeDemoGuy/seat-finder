@@ -1,4 +1,3 @@
-import os
 import time
 from datetime import datetime, timezone, timedelta
 import geckodriver_autoinstaller
@@ -37,7 +36,7 @@ def check_for_seats(current_value):
         available_seats, total_seats = match.groups()
         if available_seats != "0":
             return True
-    return False
+    return True
 
 # Store the current value for future comparisons
 def store_current_value(current_value, name, file):
@@ -67,7 +66,7 @@ def main():
     CSE340_css_identifier2 = '.focus:nth-child(5) > .seats > .text-nowrap'
     CSE340_css_identifier3 = '.focus:nth-child(11) > .seats > .text-nowrap'
     value_file = 'specific_value.txt'
-    check_interval = 75  #in seconds
+    check_interval = 20  #in seconds
     driver = setup_driver()
     print("Driver initialized.")
 
@@ -78,22 +77,20 @@ def main():
             current_value = str(get_specific_value(driver, CSE355_url, CSE355_css_identifier))
             print_result(current_value, CSE355_url, "CSE 355")
             store_current_value(current_value, "CSE 355", file)
-            time.sleep(check_interval + random.randint(0, 20) - 10)  # Wait before checking again
+            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
             current_value = str(get_specific_value(driver, CSE340_url, CSE340_css_identifier1))
             print_result(current_value, CSE340_url, "CSE340")
             store_current_value(current_value, "CSE 340", file)
-            time.sleep(check_interval + random.randint(0, 20) - 10)  # Wait before checking again
+            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
             current_value = str(get_specific_value(driver, CSE340_url, CSE340_css_identifier2))
             print_result(current_value, CSE340_url, "CSE340")
             store_current_value(current_value, "CSE 340", file)
-            time.sleep(check_interval + random.randint(0, 20) - 10)  # Wait before checking again
+            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
             current_value = str(get_specific_value(driver, CSE340_url, CSE340_css_identifier3))
             print_result(current_value, CSE340_url, "CSE340")
             store_current_value(current_value, "CSE 340", file)
-            time.sleep(check_interval + random.randint(0, 20) - 10)  # Wait before checking again
+            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
             
-            #time.sleep(check_interval + random.randint(0, 20) - 10)  # Wait before checking again
-
     except KeyboardInterrupt:
         print("Script terminated by user.")
     finally:
