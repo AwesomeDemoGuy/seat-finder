@@ -1,8 +1,12 @@
 import requests
 import os
-# Grab the url from the .env file
-URL = os.getenv("URL")
+from dotenv import load_dotenv
+load_dotenv()
+WEBHOOK_URL = os.getenv('WEBHOOK_URL')
+#USER = os.getenv('USER')
+USER = "<@180423023340290048>"
 
 def notify(class_name, current_value, url):
-  requests.post(URL, json={ "content": f"<@180423023340290048> {class_name}: Seats open: {current_value}\n{url}"})
+  print(WEBHOOK_URL)
+  requests.post(WEBHOOK_URL, json={ "content": f"{USER} {class_name}: Seats open: {current_value}\n{url}"})
 
