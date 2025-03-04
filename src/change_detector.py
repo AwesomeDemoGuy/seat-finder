@@ -18,11 +18,11 @@ def setup_driver():
     driver = webdriver.Firefox(service=service, options=options)
     return driver
 # Extract the specific value from the page
-def get_specific_value(driver, url, css_identifier):
+def get_specific_value(driver, url, xPath_identifier):
     driver.get(url)
     try:
         # Locate the specific element
-        instructor_element = driver.find_element(By.CSS_SELECTOR, css_identifier)
+        instructor_element = driver.find_element(By.XPATH, xPath_identifier)
         #seats_element = instructor_element.find_element(By.XPATH, '../../following-sibling::div[@class="class-results-cell seats"]/div[@class="text-nowrap"]')
         return instructor_element.text.strip()
     except Exception as e:
@@ -59,12 +59,8 @@ def print_result(current_value, url, class_name, timezone = timezone(timedelta(h
         
 
 def main():
-    CSE355_url = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&catalogNbr=355&honors=F&promod=F&searchType=all&subject=CSE&term=2251"
-    CSE355_css_identifier = '.focus:nth-child(2) > .seats > .text-nowrap'
-    CSE340_url = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&catalogNbr=340&honors=F&promod=F&searchType=all&subject=CSE&term=2251"
-    CSE340_css_identifier1 = '.focus:nth-child(2) > .seats > .text-nowrap'
-    CSE340_css_identifier2 = '.focus:nth-child(5) > .seats > .text-nowrap'
-    CSE340_css_identifier3 = '.focus:nth-child(11) > .seats > .text-nowrap'
+    CSE434_url = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&catalogNbr=434&honors=F&keywords=87494&promod=F&searchType=all&subject=CSE&term=2257"
+    CSE434_xPath = '/html/body/div[2]/div[2]/div[2]/div/div/div[5]/div/div/div/div[2]/div[14]/div'
     value_file = 'specific_value.txt'
     check_interval = 20  #in seconds
     driver = setup_driver()
@@ -74,21 +70,9 @@ def main():
 
     try:
         while True:
-            current_value = str(get_specific_value(driver, CSE355_url, CSE355_css_identifier))
-            print_result(current_value, CSE355_url, "CSE 355")
-            store_current_value(current_value, "CSE 355", file)
-            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
-            current_value = str(get_specific_value(driver, CSE340_url, CSE340_css_identifier1))
-            print_result(current_value, CSE340_url, "CSE340")
-            store_current_value(current_value, "CSE 340", file)
-            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
-            current_value = str(get_specific_value(driver, CSE340_url, CSE340_css_identifier2))
-            print_result(current_value, CSE340_url, "CSE340")
-            store_current_value(current_value, "CSE 340", file)
-            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
-            current_value = str(get_specific_value(driver, CSE340_url, CSE340_css_identifier3))
-            print_result(current_value, CSE340_url, "CSE340")
-            store_current_value(current_value, "CSE 340", file)
+            current_value = str(get_specific_value(driver, CSE434_url, CSE434_xPath))
+            print_result(current_value, CSE434_url, "CSE 434")
+            store_current_value(current_value, "CSE 434", file)
             time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
             
     except KeyboardInterrupt:
