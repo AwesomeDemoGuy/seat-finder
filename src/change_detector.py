@@ -21,7 +21,7 @@ def setup_driver():
 def get_specific_value(driver, url, xPath_identifier):
     driver.get(url)
     try:
-        time.sleep(5)
+        driver.implicitly_wait(10)
         # Locate the specific element
         instructor_element = driver.find_element(By.XPATH, xPath_identifier)
         #seats_element = instructor_element.find_element(By.XPATH, '../../following-sibling::div[@class="class-results-cell seats"]/div[@class="text-nowrap"]')
