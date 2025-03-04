@@ -21,6 +21,7 @@ def setup_driver():
 def get_specific_value(driver, url, xPath_identifier):
     driver.get(url)
     try:
+        time.sleep(5)
         # Locate the specific element
         instructor_element = driver.find_element(By.XPATH, xPath_identifier)
         #seats_element = instructor_element.find_element(By.XPATH, '../../following-sibling::div[@class="class-results-cell seats"]/div[@class="text-nowrap"]')
@@ -60,7 +61,7 @@ def print_result(current_value, url, class_name, timezone = timezone(timedelta(h
 
 def main():
     CSE434_url = "https://catalog.apps.asu.edu/catalog/classes/classlist?campusOrOnlineSelection=C&catalogNbr=434&honors=F&keywords=87494&promod=F&searchType=all&subject=CSE&term=2257"
-    CSE434_xPath = '/html/body/div[2]/div[2]/div[2]/div/div/div[5]/div/div/div/div[2]/div[14]/div'
+    CSE434_xPath = "//div[@id='class-results']/div/div[2]/div[14]/div"
     value_file = 'specific_value.txt'
     check_interval = 20  #in seconds
     driver = setup_driver()
@@ -70,10 +71,11 @@ def main():
 
     try:
         while True:
+            
             current_value = str(get_specific_value(driver, CSE434_url, CSE434_xPath))
             print_result(current_value, CSE434_url, "CSE 434")
             store_current_value(current_value, "CSE 434", file)
-            time.sleep(check_interval + random.randint(0, 40) - 20)  # Wait before checking again
+            time.sleep(check_interval + random.randint(0, 40))  # Wait before checking again
             
     except KeyboardInterrupt:
         print("Script terminated by user.")
@@ -82,3 +84,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
